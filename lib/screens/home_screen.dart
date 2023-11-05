@@ -1,6 +1,52 @@
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
+  static const routeName = '/home';
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          drawSearchBox(),
+          Expanded(
+            child: GridView(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 0.9,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                crossAxisCount: 2,
+              ),
+              children: [
+                makeBoxButton(
+                  'https://picsum.photos/290?image=1',
+                  'Title 1',
+                  'Description 1',
+                ),
+                makeBoxButton(
+                  'https://picsum.photos/250?image=2',
+                  'Title 2',
+                  'Description 2',
+                ),
+                makeBoxButton(
+                  'https://picsum.photos/250?image=3',
+                  'Title 3',
+                  'Description 3',
+                ),
+                makeBoxButton(
+                  'https://picsum.photos/250?image=4',
+                  'Title 4',
+                  'Description 4',
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget drawSearchBox() {
     return Padding(
       padding: EdgeInsetsDirectional.only(top: 16, bottom: 32),
@@ -47,50 +93,6 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          drawSearchBox(),
-          Expanded(
-            child: GridView(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: 0.9,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                crossAxisCount: 2,
-              ),
-              children: [
-                makeBoxButton(
-                  'https://picsum.photos/290?image=1',
-                  'Title 1',
-                  'Description 1',
-                ),
-                makeBoxButton(
-                  'https://picsum.photos/250?image=2',
-                  'Title 2',
-                  'Description 2',
-                ),
-                makeBoxButton(
-                  'https://picsum.photos/250?image=3',
-                  'Title 3',
-                  'Description 3',
-                ),
-                makeBoxButton(
-                  'https://picsum.photos/250?image=4',
-                  'Title 4',
-                  'Description 4',
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -162,7 +164,7 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         onTap: () {
-          print('tapped');
+          print('tapped ' + title);
         },
       ),
       decoration: BoxDecoration(
