@@ -1,9 +1,8 @@
-import 'package:ar_flutter_plugin_example/router.dart';
-import 'package:ar_flutter_plugin_example/screens/account_screen.dart';
-import 'package:ar_flutter_plugin_example/screens/home_screen.dart';
-import 'package:ar_flutter_plugin_example/screens/qr_scan_screen.dart';
-import 'package:ar_flutter_plugin_example/screens/settings_screen.dart';
-import 'package:ar_flutter_plugin_example/screens/upload_screen.dart';
+import 'package:demo_space/screens/account_screen.dart';
+import 'package:demo_space/screens/home_screen.dart';
+import 'package:demo_space/screens/qr_scan_screen.dart';
+import 'package:demo_space/screens/settings_screen.dart';
+import 'package:demo_space/screens/upload_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -22,19 +21,25 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final PersistentTabController _controller =
-  PersistentTabController(initialIndex: 2);
+      PersistentTabController(initialIndex: 2);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'AR Plugin Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         useMaterial3: true,
+        scaffoldBackgroundColor: Colors.white,
       ),
-      onGenerateRoute: (settings) => generateRoute(settings),
       home: drawBottomTabBar(context),
     );
   }
@@ -85,8 +90,7 @@ class MyApp extends StatelessWidget {
   }
 
   drawBottomTabBar(BuildContext context) {
-    return
-    PersistentTabView(
+    return PersistentTabView(
       context,
       controller: _controller,
       screens: _buildScreens(),
@@ -115,11 +119,10 @@ class MyApp extends StatelessWidget {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle:
-      NavBarStyle.style1, // Choose the nav bar style with this property.
+          NavBarStyle.style1, // Choose the nav bar style with this property.
     );
   }
 }
-
 
 //
 // class MyApp extends StatefulWidget {

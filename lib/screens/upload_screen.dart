@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 
 class UploadScreen extends StatelessWidget {
-  static const routeName = '/upload';
+  const UploadScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return new Scaffold(
+      appBar: AppBar(
+        title: Text('Upload'),
+      ),
+      body: Center(
+        child: Text('Upload'),
+      ),
+    );
   }
 }
