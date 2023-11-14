@@ -2,6 +2,7 @@ import 'package:demo_space/screens/account_screen.dart';
 import 'package:demo_space/screens/home_screen.dart';
 import 'package:demo_space/screens/qr_scan_screen.dart';
 import 'package:demo_space/screens/settings_screen.dart';
+import 'package:demo_space/screens/test_screen.dart';
 import 'package:demo_space/screens/upload_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -34,7 +35,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'AR Plugin Demo',
+      title: 'DemoSpace',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         useMaterial3: true,
@@ -49,7 +50,7 @@ class _MyAppState extends State<MyApp> {
       SettingsScreen(),
       UploadScreen(),
       HomeScreen(),
-      QrScanScreen(),
+      TestScreen(),
       AccountScreen(),
     ];
   }
@@ -140,7 +141,7 @@ class _MyAppState extends State<MyApp> {
 //     initPlatformState();
 //   }
 //
-//   // Platform messages are asynchronous, so we initialize in an async method.
+//   // Platform messages are asynchron1ous, so we initialize in an async method.
 //   Future<void> initPlatformState() async {
 //     String platformVersion;
 //     // Platform messages may fail, so we use a try/catch PlatformException.
