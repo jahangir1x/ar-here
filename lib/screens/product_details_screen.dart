@@ -25,37 +25,41 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       appBar: AppBar(
         title: Text('${widget.title}'),
       ),
-      body: Container(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Text('${widget.description}'),
-                Padding(padding: const EdgeInsets.all(8.0)),
-                Text('${widget.thumbnailUrl}'),
-                Padding(padding: const EdgeInsets.all(8.0)),
-                Text('${widget.modelUrl}'),
-                Padding(padding: const EdgeInsets.all(8.0)),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (builder) => ProductArScreen(
-                          modelUrl: widget.modelUrl,
-                          title: widget.title,
-                        ),
-                      ),
-                    );
-                  },
-                  child: Text("View in your place"),
-                ),
-              ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductArScreen(
+                modelUrl: widget.modelUrl,
+                title: widget.title,
+              ),
             ),
-          ),
+          );
+        },
+        child: Icon(Icons.open_in_new),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text('${widget.description}'),
+            Image(image: NetworkImage('${widget.thumbnailUrl}')),
+            Image(
+                image: NetworkImage(
+                    '${getDemoImagesPath(widget.modelUrl)}demo1.png')),
+            Image(
+                image: NetworkImage(
+                    '${getDemoImagesPath(widget.modelUrl)}demo2.png')),
+            Image(
+                image: NetworkImage(
+                    '${getDemoImagesPath(widget.modelUrl)}demo3.png')),
+          ],
         ),
       ),
     );
+  }
+
+  String getDemoImagesPath(String imageUrl) {
+    return RegExp(r"http.*/").firstMatch(imageUrl)!.group(0)!;
   }
 }

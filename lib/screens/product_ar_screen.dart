@@ -154,8 +154,9 @@ class _ProductArScreenState extends State<ProductArScreen> {
         // Add note to anchor
         var newNode = ARNode(
             type: NodeType.webGLB,
-            uri: this.widget.modelUrl,
-            scale: Vector3(0.2, 0.2, 0.2),
+            uri:
+                'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb',
+            scale: Vector3(1, 1, 1),
             position: Vector3(0.0, 0.0, 0.0),
             rotation: Vector4(1.0, 0.0, 0.0, 0.0));
         bool? didAddNodeToAnchor = await this
