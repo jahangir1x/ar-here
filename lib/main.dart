@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
       SettingsScreen(),
       UploadScreen(),
       HomeScreen(),
-      TestScreen(),
+      QrScanScreen(),
       AccountScreen(),
     ];
   }
@@ -313,6 +313,7 @@ class ExampleCard extends StatelessWidget {
 
 class Example {
   const Example(this.name, this.description, this.onTap);
+
   final String name;
   final String description;
   final Function onTap;
