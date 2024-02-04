@@ -15,11 +15,11 @@ import 'package:vector_math/vector_math_64.dart';
 
 class ProductArScreen extends StatefulWidget {
   final String title;
-  final String modelUrl;
+  final String modelPathFromAppDir;
 
   const ProductArScreen({
     required this.title,
-    required this.modelUrl,
+    required this.modelPathFromAppDir,
   });
 
   @override
@@ -91,24 +91,6 @@ class _ProductArScreenState extends State<ProductArScreen> {
     this.arObjectManager!.onRotationEnd = onRotationEnded;
   }
 
-  Future<void> onButtonPressed() async {
-    // show an alert saying hello
-    if (localObjectNode != null) {
-      arObjectManager!.removeNode(localObjectNode!);
-      localObjectNode = null;
-    } else {
-      var newNode = ARNode(
-        type: NodeType.webGLB,
-        uri: this.widget.modelUrl,
-        scale: Vector3(0.2, 0.2, 0.2),
-        position: Vector3(0.0, 0.0, 0.0),
-        rotation: Vector4(1.0, 0.0, 0.0, 0.0),
-      );
-      bool? didAddLocalNode = await this.arObjectManager!.addNode(newNode);
-      this.localObjectNode = (didAddLocalNode!) ? newNode : null;
-    }
-  }
-
   void updateLocalObjectNodeReference(String nodeName) {
     this.localObjectNode =
         this.nodes.firstWhere((element) => element.name == nodeName);
@@ -120,7 +102,7 @@ class _ProductArScreenState extends State<ProductArScreen> {
   }
 
   onPanChanged(String nodeName) {
-    debug(context, "Continued panning node " + nodeName);
+    // debug(context, "Continued panning node " + nodeName);
     // updateLocalObjectNodeReference(nodeName);
   }
 
@@ -153,9 +135,8 @@ class _ProductArScreenState extends State<ProductArScreen> {
         this.anchors.add(newAnchor);
         // Add note to anchor
         var newNode = ARNode(
-            type: NodeType.webGLB,
-            uri:
-                'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Duck/glTF-Binary/Duck.glb',
+            type: NodeType.fileSystemAppFolderGLB,
+            uri: '${widget.modelPathFromAppDir}',
             scale: Vector3(1, 1, 1),
             position: Vector3(0.0, 0.0, 0.0),
             rotation: Vector4(1.0, 0.0, 0.0, 0.0));

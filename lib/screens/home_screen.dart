@@ -21,6 +21,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    // Navigator.push(context, MaterialPageRoute(builder: (builder) {
+    //   return ProductDetailsScreen(
+    //     thumbnailUrl:
+    //         'https://media.githubusercontent.com/media/jahangir1x/gltf-models/main/models/viking_drakkar_long_boat_low-poly/pic.png',
+    //     modelUrl:
+    //         'https://media.githubusercontent.com/media/jahangir1x/gltf-models/main/models/viking_drakkar_long_boat_low-poly/viking_drakkar_long_boat_low-poly.glb',
+    //     title: 'Viking Drakkar Long Boat Low-Poly',
+    //     description: 'Viking Drakkar Long Boat Low-Poly',
+    //   );
+    // }));
     scrollController.addListener(() async {
       if (isLoadingMoreData) {
         return;

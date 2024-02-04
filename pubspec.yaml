@@ -27,6 +27,7 @@ dependencies:
   ar_flutter_plugin: ^0.7.3
   persistent_bottom_nav_bar: any
   http: any
+  dio: ^5.4.0
 
   # Firebase dependencies to shared and manage cloud anchor IDs and related content
 

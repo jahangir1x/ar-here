@@ -1,6 +1,9 @@
 import 'package:demo_space/screens/product_ar_screen.dart';
 import 'package:demo_space/screens/upload_screen.dart';
+import 'package:path/path.dart' as path;
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final String thumbnailUrl;
@@ -19,26 +22,90 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  double? downloadProgress = 0;
+  String downloadStatusText = '';
+  bool isDownloading = false;
+  bool isDownloaded = false;
+  CancelToken cancelToken = CancelToken();
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
         title: Text('${widget.title}'),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ProductArScreen(
-                modelUrl: widget.modelUrl,
-                title: widget.title,
-              ),
+      floatingActionButton: (isDownloaded)
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProductArScreen(
+                      modelPathFromAppDir: path.basename(widget.modelUrl),
+                      title: widget.title,
+                    ),
+                  ),
+                );
+              },
+              child: Icon(Icons.open_in_new),
+            )
+          : FloatingActionButton(
+              onPressed: () async {
+                if (isDownloading) {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('Cancel Download?'),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('No')),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  cancelToken.cancel();
+                                  setState(() {
+                                    isDownloading = false;
+                                    isDownloaded = false;
+                                    downloadStatusText = '';
+                                    cancelToken = CancelToken();
+                                    downloadProgress = 0;
+                                  });
+                                },
+                                child: Text('Yes')),
+                          ],
+                        );
+                      });
+                  return;
+                }
+                setState(() {
+                  isDownloading = true;
+                  isDownloaded = false;
+                });
+                Dio dio = Dio();
+                String dir = (await getApplicationDocumentsDirectory()).path;
+                String filepath = '${dir}/${path.basename(widget.modelUrl)}';
+                dio.download(widget.modelUrl, '$filepath',
+                    cancelToken: cancelToken, onReceiveProgress: (rec, total) {
+                  setState(() {
+                    downloadProgress = (rec / total);
+                    var totalBytesInMb = total / 1000000;
+                    var receivedBytesInMb = rec / 1000000;
+                    downloadStatusText =
+                        '${receivedBytesInMb.toStringAsFixed(2)}MB / ${totalBytesInMb.toStringAsFixed(2)}MB';
+                  });
+                }).then((value) {
+                  setState(() {
+                    isDownloading = false;
+                    isDownloaded = true;
+                  });
+                });
+              },
+              child: Icon(Icons.download),
             ),
-          );
-        },
-        child: Icon(Icons.open_in_new),
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -53,6 +120,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             Image(
                 image: NetworkImage(
                     '${getDemoImagesPath(widget.modelUrl)}demo3.png')),
+            Row(
+              children: [
+                Text(downloadStatusText),
+                CircularProgressIndicator(
+                  value: (isDownloading) ? downloadProgress : 0,
+                ),
+              ],
+            ),
           ],
         ),
       ),
