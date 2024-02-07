@@ -46,7 +46,13 @@ class _ProductArScreenState extends State<ProductArScreen> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-        title: Text('${widget.title}'),
+        title: Text(
+          '${widget.title}',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: Container(
         child: Stack(

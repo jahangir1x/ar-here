@@ -57,9 +57,9 @@ class _MyAppState extends State<MyApp> {
 
   List<Widget> _buildScreens() {
     return [
-      HomeScreen(),
-      UploadScreen(),
       SettingsScreen(),
+      UploadScreen(),
+      HomeScreen(),
       QrScanScreen(),
       AccountScreen(),
     ];

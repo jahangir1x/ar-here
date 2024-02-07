@@ -17,6 +17,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool isUsageStatisticsOn = true;
 
   @override
+  void initState() {
+    super.initState();
+    isDarkMode = ThemeProvider.IsDarkMode;
+    isNotificationOn = PersistentStorage.getIsNotificationOn();
+    isUsageStatisticsOn = PersistentStorage.getIsUsageStatisticsOn();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -77,6 +85,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onChanged: (value) {
                     setState(() {
                       isNotificationOn = value;
+                      PersistentStorage.setIsNotificationOn(value);
                     });
                   },
                 ),
@@ -99,6 +108,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onChanged: (value) {
                     setState(() {
                       isUsageStatisticsOn = value;
+                      PersistentStorage.setIsUsageStatisticsOn(value);
                     });
                   },
                 ),
