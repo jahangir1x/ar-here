@@ -14,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final scrollController = ScrollController();
+  String searchString = '';
   List products = [];
   int page = 1;
   bool isLoadingMoreData = false;
@@ -73,8 +74,12 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Expanded(
               child: TextField(
+                onChanged: (value) {
+                  searchString = value;
+                  searchAndFilterProducts();
+                },
                 decoration: InputDecoration(
-                  hintText: 'Search',
+                  hintText: 'Search for ...',
                   border: InputBorder.none,
                   contentPadding: EdgeInsetsDirectional.only(
                     start: 16,
@@ -82,16 +87,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            Container(
-              width: 100,
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.blueAccent,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Icon(
-                Icons.search,
-                color: Colors.white,
+            InkWell(
+              onTap: () {
+                searchAndFilterProducts();
+              },
+              child: Container(
+                width: 100,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.blueAccent,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Icon(
+                  Icons.search,
+                  color: Colors.white,
+                ),
               ),
             ),
           ],
@@ -283,5 +293,30 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     } catch (e) {}
     print(products.length);
+  }
+
+  Future<void> searchAndFilterProducts() async {
+    final allProductsUrl =
+        'https://raw.githubusercontent.com/jahangir1x/gltf-models/main/lists.json';
+    final uri = Uri.parse(allProductsUrl);
+    try {
+      final response = await http.get(uri);
+      if (response.statusCode == 200) {
+        final json = jsonDecode(response.body) as List;
+        final filteredProducts = json.where((element) {
+          return (element['name']
+                  .toString()
+                  .toLowerCase()
+                  .contains(searchString.toLowerCase()) ||
+              element['description']
+                  .toString()
+                  .toLowerCase()
+                  .contains(searchString.toLowerCase()));
+        }).toList();
+        setState(() {
+          products = filteredProducts;
+        });
+      }
+    } catch (e) {}
   }
 }

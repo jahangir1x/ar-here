@@ -1,6 +1,6 @@
-package io.carius.lars.ar_flutter_plugin_example
+package com.jahangir1x.arhere
 
 import io.flutter.embedding.android.FlutterActivity
 
-class MainActivity: FlutterActivity() {
+class MainActivity : FlutterActivity() {
 }
