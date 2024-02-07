@@ -16,12 +16,6 @@ import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 
-import 'examples/debugoptionsexample.dart';
-import 'examples/localandwebobjectsexample.dart';
-import 'examples/objectgesturesexample.dart';
-import 'examples/objectsonplanesexample.dart';
-import 'examples/screenshotexample.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PersistentStorage.init();

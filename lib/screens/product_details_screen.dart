@@ -184,7 +184,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ),
           Positioned(
             bottom: 80,
-            right: 25,
+            right: 30,
             child: (isDownloading)
                 ? CircularProgressIndicator(
                     value: (isDownloading) ? downloadProgress : 0,

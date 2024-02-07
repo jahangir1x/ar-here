@@ -12,6 +12,7 @@ import 'package:ar_flutter_plugin/models/ar_node.dart';
 import 'package:ar_here/utils/debug.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter/material.dart' as material;
 
 class ProductArScreen extends StatefulWidget {
   final String title;
@@ -30,11 +31,11 @@ class _ProductArScreenState extends State<ProductArScreen> {
   ARSessionManager? arSessionManager;
   ARObjectManager? arObjectManager;
   ARAnchorManager? arAnchorManager;
-
   ARNode? localObjectNode;
-
   List<ARNode> nodes = [];
   List<ARAnchor> anchors = [];
+
+  double scale = 100;
 
   @override
   void dispose() {
@@ -60,7 +61,89 @@ class _ProductArScreenState extends State<ProductArScreen> {
             ARView(
               onARViewCreated: onARViewCreated,
               planeDetectionConfig: PlaneDetectionConfig.horizontal,
-            )
+            ),
+            Positioned(
+                bottom: 80,
+                left: 20,
+                child: Column(
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(14),
+                      ),
+                      onPressed: () {
+                        this.localObjectNode?.position =
+                            this.localObjectNode!.position +
+                                Vector3(0.0, 0.01, 0.0);
+                      },
+                      child: Icon(Icons.arrow_upward),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.all(14),
+                      ),
+                      onPressed: () {
+                        this.localObjectNode?.position =
+                            this.localObjectNode!.position +
+                                Vector3(0.0, -0.01, 0.0);
+                      },
+                      child: Icon(Icons.arrow_downward),
+                    ),
+                  ],
+                )),
+            Positioned(
+              bottom: 80,
+              right: 20,
+              child: Column(
+                children: [
+                  Text(
+                    '${scale} %',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: (scale != 100)
+                          ? material.Colors.red
+                          : material.Colors.white,
+                    ),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: CircleBorder(),
+                      padding: EdgeInsets.all(12),
+                    ),
+                    onPressed: () {
+                      this.localObjectNode?.scale =
+                          Vector3(scale / 100.0, scale / 100.0, scale / 100.0);
+                      setState(() {
+                        scale += 1;
+                      });
+                    },
+                    child: Text('+', style: TextStyle(fontSize: 20)),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: CircleBorder(),
+                      padding: EdgeInsets.all(12),
+                    ),
+                    onPressed: () {
+                      this.localObjectNode?.scale =
+                          Vector3(scale / 100.0, scale / 100.0, scale / 100.0);
+                      setState(() {
+                        scale -= 1;
+                      });
+                    },
+                    child: Text('-', style: TextStyle(fontSize: 20)),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -80,7 +163,7 @@ class _ProductArScreenState extends State<ProductArScreen> {
       showFeaturePoints: false,
       showPlanes: true,
       customPlaneTexturePath: "Images/triangle.png",
-      showWorldOrigin: true,
+      showWorldOrigin: false,
       handlePans: true,
       handleRotation: true,
     );
@@ -103,7 +186,6 @@ class _ProductArScreenState extends State<ProductArScreen> {
   }
 
   onPanStarted(String nodeName) {
-    debug(context, "Started panning node " + nodeName);
     updateLocalObjectNodeReference(nodeName);
   }
 
@@ -112,22 +194,15 @@ class _ProductArScreenState extends State<ProductArScreen> {
     // updateLocalObjectNodeReference(nodeName);
   }
 
-  onPanEnded(String nodeName, Matrix4 newTransform) {
-    debug(context, "Ended panning node " + nodeName);
-  }
+  onPanEnded(String nodeName, Matrix4 newTransform) {}
 
   onRotationStarted(String nodeName) {
-    debug(context, "Started rotating node " + nodeName);
     updateLocalObjectNodeReference(nodeName);
   }
 
-  onRotationChanged(String nodeName) {
-    debug(context, "Continued rotating node " + nodeName);
-  }
+  onRotationChanged(String nodeName) {}
 
-  onRotationEnded(String nodeName, Matrix4 newTransform) {
-    debug(context, "Ended rotating node " + nodeName);
-  }
+  onRotationEnded(String nodeName, Matrix4 newTransform) {}
 
   Future<void> onPlaneOrPointTapped(
       List<ARHitTestResult> hitTestResults) async {
@@ -143,7 +218,7 @@ class _ProductArScreenState extends State<ProductArScreen> {
         var newNode = ARNode(
             type: NodeType.fileSystemAppFolderGLB,
             uri: '${widget.modelPathFromAppDir}',
-            scale: Vector3(1, 1, 1),
+            scale: Vector3(scale / 100.0, scale / 100.0, scale / 100.0),
             position: Vector3(0.0, 0.0, 0.0),
             rotation: Vector4(1.0, 0.0, 0.0, 0.0));
         bool? didAddNodeToAnchor = await this
