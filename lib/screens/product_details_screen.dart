@@ -1,5 +1,5 @@
-import 'package:demo_space/screens/product_ar_screen.dart';
-import 'package:demo_space/screens/upload_screen.dart';
+import 'package:ar_here/screens/product_ar_screen.dart';
+import 'package:ar_here/screens/upload_screen.dart';
 import 'package:path/path.dart' as path;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';

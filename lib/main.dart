@@ -1,10 +1,10 @@
-import 'package:demo_space/screens/account_screen.dart';
-import 'package:demo_space/screens/home_screen.dart';
-import 'package:demo_space/screens/qr_scan_screen.dart';
-import 'package:demo_space/screens/settings_screen.dart';
-import 'package:demo_space/screens/test_download_screen.dart';
-import 'package:demo_space/screens/test_screen.dart';
-import 'package:demo_space/screens/upload_screen.dart';
+import 'package:ar_here/screens/account_screen.dart';
+import 'package:ar_here/screens/home_screen.dart';
+import 'package:ar_here/screens/qr_scan_screen.dart';
+import 'package:ar_here/screens/settings_screen.dart';
+import 'package:ar_here/screens/test_download_screen.dart';
+import 'package:ar_here/screens/test_screen.dart';
+import 'package:ar_here/screens/upload_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
