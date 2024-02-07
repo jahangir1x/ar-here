@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
         width: double.infinity,
         height: 50,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.background,
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
@@ -95,12 +95,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: 100,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: Colors.blueAccent,
+                  color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Icon(
                   Icons.search,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.background,
                 ),
               ),
             ),
@@ -125,10 +125,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.white,
+                      Theme.of(context).colorScheme.background,
                       Colors.transparent,
                       Colors.transparent,
-                      Colors.white,
+                      Theme.of(context).colorScheme.background,
                     ],
                     stops: [0.0, 0.02, 0.96, 1.0],
                   ).createShader(rect);
@@ -194,7 +194,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: Container(
                                           width: double.infinity,
                                           decoration: BoxDecoration(
-                                            color: Colors.white,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .background,
                                             borderRadius: BorderRadius.only(
                                               bottomLeft: Radius.circular(16),
                                               bottomRight: Radius.circular(16),
@@ -250,7 +252,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                 ),
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color:
+                                      Theme.of(context).colorScheme.background,
                                   borderRadius: BorderRadius.circular(16),
                                   boxShadow: [
                                     BoxShadow(

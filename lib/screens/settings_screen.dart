@@ -1,7 +1,20 @@
+import 'package:ar_here/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class SettingsScreen extends StatelessWidget {
+import '../utils/persistent_storage.dart';
+
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  bool isDarkMode = ThemeProvider.IsDarkMode;
+  bool isNotificationOn = true;
+  bool isUsageStatisticsOn = true;
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +48,15 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
                 Switch(
-                  value: false,
-                  onChanged: (value) {},
+                  value: isDarkMode,
+                  onChanged: (value) async {
+                    Provider.of<ThemeProvider>(context, listen: false)
+                        .toggleTheme();
+                    await PersistentStorage.setIsDarkMode(value);
+                    setState(() {
+                      isDarkMode = ThemeProvider.IsDarkMode;
+                    });
+                  },
                 ),
               ],
             ),
@@ -53,8 +73,12 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
                 Switch(
-                  value: true,
-                  onChanged: (value) {},
+                  value: isNotificationOn,
+                  onChanged: (value) {
+                    setState(() {
+                      isNotificationOn = value;
+                    });
+                  },
                 ),
               ],
             ),
@@ -65,14 +89,18 @@ class SettingsScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Location',
+                  'Send Usage Statistics',
                   style: TextStyle(
                     fontSize: 20,
                   ),
                 ),
                 Switch(
-                  value: true,
-                  onChanged: (value) {},
+                  value: isUsageStatisticsOn,
+                  onChanged: (value) {
+                    setState(() {
+                      isUsageStatisticsOn = value;
+                    });
+                  },
                 ),
               ],
             ),
