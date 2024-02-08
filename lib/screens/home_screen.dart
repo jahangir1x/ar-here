@@ -18,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List products = [];
   int page = 1;
   bool isLoadingMoreData = false;
+  List favouriteProducts = [];
 
   @override
   void initState() {
@@ -165,80 +166,129 @@ class _HomeScreenState extends State<HomeScreen> {
                                   focusColor: Colors.transparent,
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
+                                  child: Stack(
                                     children: [
-                                      Hero(
-                                        tag: imageUrl,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(20),
-                                            bottomRight: Radius.circular(20),
-                                            topLeft: Radius.circular(16),
-                                            topRight: Radius.circular(16),
-                                          ),
-                                          child: CachedNetworkImage(
-                                            imageUrl: imageUrl,
-                                            fit: BoxFit.cover,
-                                            height: 195,
-                                            width: double.infinity,
-                                            placeholder: ((context, url) =>
-                                                Center(
-                                                  child:
-                                                      CircularProgressIndicator(),
-                                                )),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .background,
-                                            borderRadius: BorderRadius.only(
-                                              bottomLeft: Radius.circular(16),
-                                              bottomRight: Radius.circular(16),
-                                              topLeft: Radius.circular(0),
-                                              topRight: Radius.circular(0),
+                                      Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Hero(
+                                            tag: imageUrl,
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.only(
+                                                bottomLeft: Radius.circular(20),
+                                                bottomRight:
+                                                    Radius.circular(20),
+                                                topLeft: Radius.circular(16),
+                                                topRight: Radius.circular(16),
+                                              ),
+                                              child: CachedNetworkImage(
+                                                imageUrl: imageUrl,
+                                                fit: BoxFit.cover,
+                                                height: 195,
+                                                width: double.infinity,
+                                                placeholder: ((context, url) =>
+                                                    Center(
+                                                      child:
+                                                          CircularProgressIndicator(),
+                                                    )),
+                                              ),
                                             ),
                                           ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(16),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  '$name',
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
+                                          Expanded(
+                                            child: Container(
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .background,
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(16),
+                                                  bottomRight:
+                                                      Radius.circular(16),
+                                                  topLeft: Radius.circular(0),
+                                                  topRight: Radius.circular(0),
                                                 ),
-                                              ],
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(16),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      '$name',
+                                                      maxLines: 1,
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                             ),
+                                          ),
+                                        ],
+                                      ),
+                                      Positioned(
+                                        top: 5,
+                                        left: 5,
+                                        child: SizedBox(
+                                          width: 32,
+                                          height: 32,
+                                          child: ElevatedButton(
+                                            child: Container(),
+                                            style: ElevatedButton.styleFrom(
+                                              shape: CircleBorder(),
+                                            ),
+                                            onPressed: () {
+                                              setState(() {
+                                                if (favouriteProducts
+                                                    .contains(products[index]))
+                                                  favouriteProducts
+                                                      .remove(products[index]);
+                                                else
+                                                  favouriteProducts
+                                                      .add(products[index]);
+                                              });
+                                            },
                                           ),
                                         ),
                                       ),
+                                      Positioned(
+                                        child: Icon(
+                                          (favouriteProducts
+                                                  .contains(products[index]))
+                                              ? Icons.favorite
+                                              : Icons.favorite_border,
+                                          color: Colors.red,
+                                        ),
+                                        top: 9,
+                                        left: 9,
+                                      )
                                     ],
                                   ),
                                   onTap: () {
                                     print('tapped $name');
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (builder) {
-                                      return ProductDetailsScreen(
-                                        thumbnailUrl: imageUrl,
-                                        modelUrl: modelUrl,
-                                        title: name,
-                                        description: description,
-                                      );
-                                    }));
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (builder) {
+                                          return ProductDetailsScreen(
+                                            thumbnailUrl: imageUrl,
+                                            modelUrl: modelUrl,
+                                            title: name,
+                                            description: description,
+                                          );
+                                        },
+                                      ),
+                                    );
                                   },
                                 ),
                                 decoration: BoxDecoration(
