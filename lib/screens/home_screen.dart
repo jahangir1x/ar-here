@@ -237,13 +237,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ],
                                       ),
                                       Positioned(
-                                        top: 5,
-                                        left: 5,
-                                        child: SizedBox(
-                                          width: 32,
-                                          height: 32,
+                                        top: 0,
+                                        left: 0,
+                                        child: Container(
+                                          transform: Matrix4.translationValues(
+                                              -12, 0, 0),
                                           child: ElevatedButton(
-                                            child: Container(),
+                                            child: Positioned(
+                                              child: Icon(
+                                                (favouriteProducts.contains(
+                                                        products[index]))
+                                                    ? Icons.favorite
+                                                    : Icons.favorite_border,
+                                                color: Colors.red,
+                                              ),
+                                              top: 0,
+                                              left: 0,
+                                            ),
                                             style: ElevatedButton.styleFrom(
                                               shape: CircleBorder(),
                                             ),
@@ -261,17 +271,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         ),
                                       ),
-                                      Positioned(
-                                        child: Icon(
-                                          (favouriteProducts
-                                                  .contains(products[index]))
-                                              ? Icons.favorite
-                                              : Icons.favorite_border,
-                                          color: Colors.red,
-                                        ),
-                                        top: 9,
-                                        left: 9,
-                                      )
                                     ],
                                   ),
                                   onTap: () {
