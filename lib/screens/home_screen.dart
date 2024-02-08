@@ -180,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: CachedNetworkImage(
                                             imageUrl: imageUrl,
                                             fit: BoxFit.cover,
-                                            height: 140,
+                                            height: 190,
                                             width: double.infinity,
                                             placeholder: ((context, url) =>
                                                 Center(
@@ -219,16 +219,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  '$description',
-                                                  maxLines: 3,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                    fontSize: 11,
-                                                    color: Colors.grey,
                                                   ),
                                                 ),
                                               ],
