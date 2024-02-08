@@ -172,15 +172,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                         tag: imageUrl,
                                         child: ClipRRect(
                                           borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(0),
-                                            bottomRight: Radius.circular(0),
+                                            bottomLeft: Radius.circular(20),
+                                            bottomRight: Radius.circular(20),
                                             topLeft: Radius.circular(16),
                                             topRight: Radius.circular(16),
                                           ),
                                           child: CachedNetworkImage(
                                             imageUrl: imageUrl,
                                             fit: BoxFit.cover,
-                                            height: 190,
+                                            height: 195,
                                             width: double.infinity,
                                             placeholder: ((context, url) =>
                                                 Center(
