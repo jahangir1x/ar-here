@@ -1,7 +1,23 @@
-# ar_flutter_plugin_example
+# AR Here
 
-Demonstrates how to use the ar_flutter_plugin plugin to create collaborative AR experiences.
+## Download
+[click here](https://github.com/jahangir1x/ar-here/releases/download/0.1-alpha/AR.Here.0.1-alpha.apk) to download alpha version of this app.
 
-## Contributing
+## Features
+- [x] View 3D concept model in AR
+- [x] Plane detection with ARCore and ARKit
+- [x] Rotate, Scale, Move 3D model
+- [x] Multiple 3D model in same scene
+- [x] Light/Dark mode
+- [ ] Upload custom 3D model
+- [ ] Share 3D model with others
+- [ ] Account system
+- [ ] Comment and feedback system
 
-Contributions are very welcome. To contribute code and discuss ideas, [create a pull request](https://github.com/CariusLars/ar_flutter_plugin/compare) or [open an issue](https://github.com/CariusLars/ar_flutter_plugin/issues/new).
+## Demo
+
+## Build
+- Clone this repository
+- Open in Android Studio
+- Follow [official docs from Flutter](https://docs.flutter.dev/deployment/android) to build apk
+
